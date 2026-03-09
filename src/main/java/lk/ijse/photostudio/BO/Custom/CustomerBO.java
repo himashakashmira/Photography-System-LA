@@ -1,0 +1,19 @@
+package lk.ijse.photostudio.BO.Custom;
+
+import lk.ijse.photostudio.BO.SuperBO;
+import lk.ijse.photostudio.DTO.CustomerDTO;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+public interface CustomerBO extends SuperBO {
+    ArrayList<CustomerDTO> getAllCustomers() throws SQLException, ClassNotFoundException;
+
+    boolean saveCustomer(CustomerDTO dto) throws SQLException, ClassNotFoundException;
+
+    boolean updateCustomer(CustomerDTO dto) throws SQLException, ClassNotFoundException;
+
+    boolean deleteCustomer(String id) throws SQLException, ClassNotFoundException;
+
+    String generateNewCustomerId() throws SQLException, ClassNotFoundException;
+}

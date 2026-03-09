@@ -1,0 +1,78 @@
+/* --- GLASSMORPHISM EFFECT (General) --- */
+
+/* 1. දකුණු පස Login Box එක */
+.glass-panel {
+    -fx-background-color: rgba(0, 0, 0, 0.6); /* ටිකක් තද කළු */
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-border-width: 1px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 20, 0, 0, 10);
+}
+
+/* 2. ⭐ වම් පස අලුත් රවුම් හැඩැති කොටස (NEW LEFT PANEL) ⭐ */
+.glass-curve-panel {
+    /* විනිවිද පෙනෙන නිල්/දම් මිශ්‍රණයක් */
+    -fx-background-color: linear-gradient(to bottom right, rgba(26, 16, 43, 0.85), rgba(0, 194, 203, 0.3));
+
+    /* දකුණු පැත්තේ උඩ සහ යට රවුම් කිරීම මගින් අර්ධ කවයක් (Semi-circle) ලෙස පෙන්වීම */
+    /* අනුපිළිවෙල: Top-Left, Top-Right, Bottom-Right, Bottom-Left */
+    -fx-background-radius: 0 300 300 0;
+
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-width: 0 1px 1px 0; /* දකුණු පැත්තේ විතරක් border එක */
+    -fx-border-radius: 0 300 300 0;
+
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 30, 0, 10, 0);
+}
+
+/* Input Fields */
+.glass-input {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #aaaaaa;
+    -fx-background-radius: 10;
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-border-radius: 10;
+    -fx-padding: 10 15;
+    -fx-font-size: 14px;
+}
+
+.glass-input:focused {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-border-color: #00c2cb; /* Cyan Color Highlight */
+}
+
+/* Labels */
+.input-label {
+    -fx-text-fill: #eeeeee;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+/* Login Button */
+.glass-btn {
+    -fx-background-color: linear-gradient(to right, #6a11cb, #2575fc);
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, rgba(37, 117, 252, 0.4), 10, 0, 0, 5);
+}
+
+.glass-btn:hover {
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+    -fx-background-color: linear-gradient(to right, #7b21d3, #3682fd);
+}
+
+/* Forgot Password Link */
+.forgot-link {
+    -fx-text-fill: #bbbbbb;
+    -fx-border-color: transparent;
+    -fx-underline: false;
+}
+.forgot-link:hover {
+    -fx-text-fill: white;
+    -fx-underline: true;
+}

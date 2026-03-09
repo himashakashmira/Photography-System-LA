@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" styleClass="root" stylesheets="@dashboardStyle.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.photostudio.Controller.DashboardController">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="1100.0" styleClass="top-bar" BorderPane.alignment="CENTER">
+            <children>
+                <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+               <children>
+      
+                      <Label layoutX="27.0" layoutY="19.0" styleClass="logo-label" text="Vision Photography" />
+               </children></Pane>
+                <VBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="200.0">
+                    <children>
+                  <Pane prefHeight="31.0" prefWidth="175.0">
+                     <children>
+                        <Label fx:id="lblDate" layoutX="51.0" layoutY="10.0" styleClass="date-label" text="Oct 25, 2025" />
+                        <Label fx:id="lblTime" layoutX="135.0" layoutY="10.0" styleClass="date-label" text="09:45:00 PM" />
+                        <Text fill="WHITE" layoutX="126.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="|" />
+                     </children>
+                  </Pane>
+                        <Label styleClass="user-label" text="Admin User">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin></Label>
+                    </children>
+                    <HBox.margin>
+                        <Insets right="15.0" />
+                    </HBox.margin>
+                </VBox>
+                <Button mnemonicParsing="false" onAction="#handleLogout" styleClass="logout-button" text="Logout">
+                    <HBox.margin>
+                        <Insets right="20.0" />
+                    </HBox.margin>
+                </Button>
+            </children>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox prefHeight="640.0" prefWidth="240.0" styleClass="sidebar" BorderPane.alignment="CENTER">
+            <children>
+                <Label styleClass="menu-title" text="MENU">
+                    <VBox.margin>
+                        <Insets bottom="10.0" left="20.0" top="20.0" />
+                    </VBox.margin>
+                </Label>
+                <Button fx:id="clickDashboard" alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickDashboard" styleClass="nav-button" text="Dashboard">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="10.0" right="10.0" />
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="clickCustomer" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="20.0" layoutY="57.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickCustomer" styleClass="nav-button" text="Customers">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="10.0" right="10.0" />
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="clickPackages" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="20.0" layoutY="97.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickPackages" styleClass="nav-button" text="Packages">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="10.0" right="10.0" />
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="clickBookings" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="20.0" layoutY="137.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickBookings" styleClass="nav-button" text="Bookings">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="10.0" right="10.0" />
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="clickOrder" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="20.0" layoutY="177.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickOrder" styleClass="nav-button" text="Orders / Payments">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="10.0" right="10.0" />
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="clickMaterial" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="20.0" layoutY="217.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickMaterial" styleClass="nav-button" text="Materials">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="10.0" right="10.0" />
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="clickSupplier" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="20.0" layoutY="257.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickSupplier" styleClass="nav-button" text="Suppliers">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="10.0" right="10.0" />
+                    </VBox.margin>
+                </Button>
+                <Separator prefWidth="200.0">
+                    <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                    </VBox.margin>
+                </Separator>
+                <Button fx:id="clickReport" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="20.0" layoutY="297.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickReport" styleClass="nav-button" text="Reports">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="10.0" right="10.0" />
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="clickSetting" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="20.0" layoutY="337.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickSetting" styleClass="nav-button" text="Settings">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="10.0" right="10.0" />
+                    </VBox.margin>
+                </Button>
+            </children>
+        </VBox>
+    </left>
+
+    <center>
+        <ScrollPane fx:id="mainContent" fitToHeight="true" fitToWidth="true" prefHeight="663.0" prefWidth="860.0" styleClass="content-area" BorderPane.alignment="CENTER">
+            <content>
+                <VBox fx:id="overViewPane" prefHeight="469.0" prefWidth="858.0" spacing="20.0">
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                    <children>
+                        <Label styleClass="section-title" text="Overview" />
+                  <ImageView fitHeight="161.0" fitWidth="742.0" pickOnBounds="true" VBox.vgrow="ALWAYS">
+                     <image>
+                        <Image url="@../../../images/Dashboard.jpg" />
+                     </image>
+                     <VBox.margin>
+                        <Insets left="158.0" />
+                     </VBox.margin>
+                  </ImageView>
+
+                        <HBox spacing="20.0" />
+
+                        <HBox prefHeight="402.0" prefWidth="818.0" spacing="20.0" VBox.vgrow="ALWAYS">
+                            <children>
+                                <VBox prefHeight="365.0" prefWidth="0.0" styleClass="card" HBox.hgrow="ALWAYS">
+                                    <children>
+                                      <VBox onMouseClicked="#onClickReport" prefHeight="100.0" prefWidth="220.0" styleClass="card, card-blue">
+                                          <children>
+                                              <Label styleClass="card-title" text="Total Bookings" />
+                                              <Label fx:id="lblTotalBookings" styleClass="card-value" text="-" />
+                                          </children>
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                                      </VBox>
+                                      <VBox onMouseClicked="#onClickOrder" prefHeight="100.0" prefWidth="220.0" styleClass="card, card-orange">
+                                          <children>
+                                              <Label styleClass="card-title" text="Pending Orders" />
+                                              <Label fx:id="lblPendingOrders" styleClass="card-value" text="-" />
+                                          </children>
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                                      </VBox>
+                                      <VBox onMouseClicked="#onClickReport" prefHeight="100.0" prefWidth="260.0" styleClass="card, card-green">
+                                          <children>
+                                              <Label styleClass="card-title" text="Total Income" />
+                                              <Label fx:id="lblTotalIncome" styleClass="card-value" text="Rs. 0.00" />
+                                          </children>
+                                      </VBox>
+                                    </children>
+                                </VBox>
+
+                                <VBox prefHeight="350.0" styleClass="card" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <Label styleClass="card-header" text="Today's Bookings" />
+                                        <TableView fx:id="tblTodayBookings" onMouseClicked="#onClickBookings" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                            <columns>
+                                                <TableColumn fx:id="colId" prefWidth="75.0" text="ID" />
+                                                <TableColumn fx:id="colCustomer" prefWidth="120.0" text="Customer" />
+                                                <TableColumn fx:id="colType" prefWidth="100.0" text="Type" />
+                                                <TableColumn fx:id="colTime" prefWidth="75.0" text="Time" />
+                                            </columns>
+                                            <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                            </columnResizePolicy>
+                                        </TableView>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>

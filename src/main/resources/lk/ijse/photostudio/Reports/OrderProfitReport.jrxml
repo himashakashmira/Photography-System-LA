@@ -1,0 +1,151 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="OrderProfitReport" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="325a09bc-1018-4067-a0b7-f19a8773fe00">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="SansSerif" fontSize="26.0" bold="true"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="SansSerif" fontSize="16.0" bold="false"/>
+	<style name="ColumnHeader" forecolor="#666666" fontName="SansSerif" fontSize="12.0" bold="true"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle mode="Opaque" backcolor="#EEF2F6">
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+		</conditionalStyle>
+	</style>
+	<query language="SQL"><![CDATA[SELECT
+    order_id,
+    booking_id,
+    customer_id,
+    total_package_price,
+    total_option_price,
+    grand_total
+FROM management.order_total;]]></query>
+	<field name="order_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="order_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="order_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="order_total"/>
+	</field>
+	<field name="booking_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="booking_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="booking_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="order_total"/>
+	</field>
+	<field name="customer_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="customer_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="customer_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="order_total"/>
+	</field>
+	<field name="total_package_price" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total_package_price"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_package_price"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="order_total"/>
+	</field>
+	<field name="total_option_price" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total_option_price"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_option_price"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="order_total"/>
+	</field>
+	<field name="grand_total" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="grand_total"/>
+		<property name="com.jaspersoft.studio.field.label" value="grand_total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="order_total"/>
+	</field>
+	<variable name="sum_package" calculation="Sum" class="java.math.BigDecimal">
+		<expression><![CDATA[$F{total_package_price}]]></expression>
+	</variable>
+	<variable name="sum_option" calculation="Sum" class="java.math.BigDecimal">
+		<expression><![CDATA[$F{total_option_price}]]></expression>
+	</variable>
+	<variable name="sum_grand" calculation="Sum" class="java.math.BigDecimal">
+		<expression><![CDATA[$F{grand_total}]]></expression>
+	</variable>
+	<background splitType="Stretch"/>
+	<title height="90" splitType="Stretch">
+		<element kind="frame" uuid="a1b2c3d4-e5f6-4890-a1b2-c3d4e5f67890" mode="Opaque" x="-20" y="-20" width="595" height="110" backcolor="#2C3E50">
+			<element kind="staticText" uuid="b2c3d4e5-f6a7-4890-b2c3-d4e5f6a78901" x="40" y="20" width="400" height="40" style="Title">
+				<text><![CDATA[VISION PHOTOGRAPHY]]></text>
+			</element>
+			<element kind="staticText" uuid="c3d4e5f6-a7b8-4890-c3d4-e5f6a7b89012" x="40" y="60" width="250" height="30" style="SubTitle">
+				<text><![CDATA[Financial Profit Report]]></text>
+			</element>
+			<element kind="textField" uuid="d4e5f6a7-b8c9-4890-d4e5-f6a7b8c90123" x="380" y="70" width="190" height="20" forecolor="#FFFFFF" fontSize="12.0" pattern="MMM d, yyyy h:mm:ss a" hTextAlign="Right">
+				<expression><![CDATA[new java.util.Date()]]></expression>
+			</element>
+		</element>
+	</title>
+	<columnHeader height="40" splitType="Stretch">
+		<element kind="staticText" uuid="e5f6a7b8-c9d0-4890-e5f6-a7b8c9d01234" x="0" y="10" width="70" height="30" vTextAlign="Middle" style="ColumnHeader">
+			<text><![CDATA[Order ID]]></text>
+		</element>
+		<element kind="staticText" uuid="f6a7b8c9-d0e1-4890-f6a7-b8c9d0e12345" x="70" y="10" width="80" height="30" vTextAlign="Middle" style="ColumnHeader">
+			<text><![CDATA[Booking ID]]></text>
+		</element>
+		<element kind="staticText" uuid="0a1b2c3d-4e5f-4678-0a1b-2c3d4e5f6789" x="150" y="10" width="80" height="30" vTextAlign="Middle" style="ColumnHeader">
+			<text><![CDATA[Cust. ID]]></text>
+		</element>
+		<element kind="staticText" uuid="1b2c3d4e-5f6a-4678-1b2c-3d4e5f6a7890" x="230" y="10" width="100" height="30" hTextAlign="Right" vTextAlign="Middle" style="ColumnHeader">
+			<text><![CDATA[Package Price]]></text>
+		</element>
+		<element kind="staticText" uuid="2c3d4e5f-6a7b-4678-2c3d-4e5f6a7b8901" x="330" y="10" width="100" height="30" hTextAlign="Right" vTextAlign="Middle" style="ColumnHeader">
+			<text><![CDATA[Option Price]]></text>
+		</element>
+		<element kind="staticText" uuid="3d4e5f6a-7b8c-4678-3d4e-5f6a7b8c9012" x="430" y="10" width="125" height="30" hTextAlign="Right" vTextAlign="Middle" style="ColumnHeader">
+			<text><![CDATA[Grand Total]]></text>
+		</element>
+		<element kind="line" uuid="4e5f6a7b-8c9d-4678-4e5f-6a7b8c9d0123" x="0" y="38" width="555" height="1" forecolor="#CCCCCC"/>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<element kind="frame" uuid="5f6a7b8c-9d0e-4678-5f6a-7b8c9d0e1234" mode="Opaque" x="0" y="0" width="555" height="30" style="Row">
+				<element kind="textField" uuid="6a7b8c9d-0e1f-4678-6a7b-8c9d0e1f2345" x="0" y="0" width="70" height="30" fontSize="10.0" vTextAlign="Middle">
+					<expression><![CDATA[$F{order_id}]]></expression>
+				</element>
+				<element kind="textField" uuid="7b8c9d0e-1f2a-4678-7b8c-9d0e1f2a3456" x="70" y="0" width="80" height="30" fontSize="10.0" vTextAlign="Middle">
+					<expression><![CDATA[$F{booking_id}]]></expression>
+				</element>
+				<element kind="textField" uuid="8c9d0e1f-2a3b-4678-8c9d-0e1f2a3b4567" x="150" y="0" width="80" height="30" fontSize="10.0" vTextAlign="Middle">
+					<expression><![CDATA[$F{customer_id}]]></expression>
+				</element>
+				<element kind="textField" uuid="9d0e1f2a-3b4c-4678-9d0e-1f2a3b4c5678" x="230" y="0" width="100" height="30" fontSize="10.0" pattern="Rs #,##0.00" hTextAlign="Right" vTextAlign="Middle">
+					<expression><![CDATA[$F{total_package_price}]]></expression>
+				</element>
+				<element kind="textField" uuid="0e1f2a3b-4c5d-4678-0e1f-2a3b4c5d6789" x="330" y="0" width="100" height="30" fontSize="10.0" pattern="Rs #,##0.00" hTextAlign="Right" vTextAlign="Middle">
+					<expression><![CDATA[$F{total_option_price}]]></expression>
+				</element>
+				<element kind="textField" uuid="1f2a3b4c-5d6e-4678-1f2a-3b4c5d6e7890" x="430" y="0" width="125" height="30" fontSize="10.0" pattern="Rs #,##0.00" bold="true" hTextAlign="Right" vTextAlign="Middle">
+					<expression><![CDATA[$F{grand_total}]]></expression>
+				</element>
+			</element>
+		</band>
+	</detail>
+	<pageFooter height="25" splitType="Stretch">
+		<element kind="frame" uuid="0c1d2e3f-4a5b-4678-0c1d-2e3f4a5b6789" mode="Opaque" x="0" y="1" width="555" height="24" forecolor="#D0B48E" backcolor="#2C3E50">
+			<element kind="textField" uuid="1d2e3f4a-5b6c-4678-1d2e-3f4a5b6c7890" x="433" y="0" width="80" height="20" forecolor="#FFFFFF" fontSize="10.0" bold="false" hTextAlign="Right" vTextAlign="Middle" style="ColumnHeader">
+				<expression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></expression>
+			</element>
+			<element kind="textField" uuid="2e3f4a5b-6c7d-4678-2e3f-4a5b6c7d8901" x="513" y="0" width="40" height="20" forecolor="#FFFFFF" fontSize="10.0" evaluationTime="Report" bold="false" vTextAlign="Middle" style="ColumnHeader">
+				<expression><![CDATA[" " + $V{PAGE_NUMBER}]]></expression>
+			</element>
+		</element>
+	</pageFooter>
+	<summary height="120" splitType="Stretch">
+		<element kind="line" uuid="2a3b4c5d-6e7f-4678-2a3b-4c5d6e7f8901" x="0" y="10" width="555" height="1" forecolor="#2C3E50"/>
+		<element kind="staticText" uuid="3b4c5d6e-7f8a-4678-3b4c-5d6e7f8a9012" x="200" y="20" width="150" height="20" forecolor="#666666" bold="true" hTextAlign="Right" vTextAlign="Middle">
+			<text><![CDATA[Total Package Income:]]></text>
+		</element>
+		<element kind="textField" uuid="4c5d6e7f-8a9b-4678-4c5d-6e7f8a9b0123" x="360" y="20" width="195" height="20" pattern="Rs #,##0.00" bold="true" hTextAlign="Right" vTextAlign="Middle">
+			<expression><![CDATA[$V{sum_package}]]></expression>
+		</element>
+		<element kind="staticText" uuid="5d6e7f8a-9b0c-4678-5d6e-7f8a9b0c1234" x="200" y="45" width="150" height="20" forecolor="#666666" bold="true" hTextAlign="Right" vTextAlign="Middle">
+			<text><![CDATA[Total Option Income:]]></text>
+		</element>
+		<element kind="textField" uuid="6e7f8a9b-0c1d-4678-6e7f-8a9b0c1d2345" x="360" y="45" width="195" height="20" pattern="Rs #,##0.00" bold="true" hTextAlign="Right" vTextAlign="Middle">
+			<expression><![CDATA[$V{sum_option}]]></expression>
+		</element>
+		<element kind="rectangle" uuid="7f8a9b0c-1d2e-4678-7f8a-9b0c1d2e3456" x="250" y="75" width="305" height="35" backcolor="#2C3E50"/>
+		<element kind="staticText" uuid="8a9b0c1d-2e3f-4678-8a9b-0c1d2e3f4567" x="260" y="75" width="120" height="35" forecolor="#FFFFFF" fontSize="12.0" bold="true" vTextAlign="Middle">
+			<text><![CDATA[TOTAL PROFIT:]]></text>
+		</element>
+		<element kind="textField" uuid="9b0c1d2e-3f4a-4678-9b0c-1d2e3f4a5678" x="380" y="75" width="165" height="35" forecolor="#2ECC71" fontSize="14.0" pattern="Rs #,##0.00" bold="true" hTextAlign="Right" vTextAlign="Middle">
+			<expression><![CDATA[$V{sum_grand}]]></expression>
+		</element>
+	</summary>
+</jasperReport>

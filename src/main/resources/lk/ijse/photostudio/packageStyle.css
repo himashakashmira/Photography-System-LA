@@ -1,0 +1,139 @@
+/* General Root */
+.root {
+    -fx-background-color: #F4F6F8;
+    -fx-font-family: 'Segoe UI', sans-serif;
+    -fx-padding: 0px;
+}
+
+/* Page Title */
+.page-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2C3E50;
+}
+
+/* Panels (White Cards) */
+.form-panel, .table-panel {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 2);
+}
+
+.section-header {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495E;
+    -fx-padding: 0 0 10 0;
+    -fx-border-color: #E0E0E0;
+    -fx-border-width: 0 0 1 0; /* Bottom line only */
+}
+
+/* 🔻 Input Fields (TextField, TextArea, ComboBox, DatePicker) */
+.input-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #7F8C8D;
+}
+
+.text-field-custom, .text-area-custom, .combo-box-custom, .date-picker-custom {
+    -fx-background-color: #F8F9FA;
+    -fx-border-color: #D5DBDB;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-font-size: 13px;
+    -fx-padding: 8; /* Consistent Padding */
+}
+
+.text-field-custom:focused, .text-area-custom:focused, .combo-box-custom:focused, .date-picker-custom:focused {
+    -fx-border-color: #3498DB;
+    -fx-background-color: #FFFFFF;
+}
+
+/* Fix for ComboBox & DatePicker spacing issues */
+.combo-box-custom, .date-picker-custom {
+    -fx-padding: 2;
+}
+
+/* 🔻 Buttons Styling (Customer Page Colors) */
+.btn {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+    -fx-padding: 8 15;
+}
+
+/* Save = Blue (Brand Color) */
+.btn-save {
+    -fx-background-color: #3498DB;
+}
+.btn-save:hover { -fx-background-color: #2980B9; }
+
+/* Update = Orange */
+.btn-update {
+    -fx-background-color: #E67E22;
+}
+.btn-update:hover { -fx-background-color: #D35400; }
+
+/* Delete = Red */
+.btn-delete {
+    -fx-background-color: #E74C3C;
+}
+.btn-delete:hover { -fx-background-color: #C0392B; }
+
+/* Reset = Grey */
+.btn-reset {
+    -fx-background-color: #95A5A6;
+}
+.btn-reset:hover { -fx-background-color: #7F8C8D; }
+
+/* 🔻 Search Bar */
+.search-box {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #D5DBDB;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+}
+.search-field {
+    -fx-background-color: transparent;
+    -fx-prompt-text-fill: #95A5A6;
+    -fx-font-size: 13px;
+}
+
+/* 🔻 Table View Styling */
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+.table-view .column-header-background {
+    -fx-background-color: #ECF0F1;
+    -fx-background-radius: 5px 5px 0 0;
+}
+.table-view .column-header .label {
+    -fx-text-fill: #2C3E50;
+    -fx-font-weight: bold;
+    -fx-alignment: center-left;
+}
+.table-row-cell:selected {
+    -fx-background-color: #E1F5FE;
+    -fx-text-fill: #2C3E50;
+}
+
+/* Special Option Button (Top Right) */
+.btn-special {
+    -fx-background-color: #2C3E50; /* Dark Blue Theme Color */
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20; /* Rounded Pill Shape */
+    -fx-cursor: hand;
+    -fx-padding: 8 20;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 1);
+}
+
+.btn-special:hover {
+    -fx-background-color: #34495E;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}

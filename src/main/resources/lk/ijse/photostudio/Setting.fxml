@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="900.0" styleClass="dashboard-bg" stylesheets="@setting.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.photostudio.Controller.SettingController">
+    <children>
+        <Label layoutX="30.0" layoutY="30.0" styleClass="section-title" text="System Settings" textFill="#2c3e50" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="30.0">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+
+        <ScrollPane fitToWidth="true" layoutX="30.0" layoutY="80.0" prefHeight="600.0" prefWidth="840.0" styleClass="transparent-scroll" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="80.0">
+            <content>
+                <VBox spacing="30.0">
+                    <children>
+
+                        <VBox styleClass="settings-card">
+                            <children>
+                                <Label styleClass="card-header" text="Security Settings" />
+                                <Label styleClass="settings-text" text="Update your account password." textFill="#7f8c8d">
+                                    <VBox.margin>
+                                        <Insets bottom="15.0" />
+                                    </VBox.margin>
+                                </Label>
+                                <Separator prefWidth="200.0" />
+
+                                <VBox spacing="15.0">
+                                    <padding>
+                                        <Insets top="20.0" />
+                                    </padding>
+                                    <children>
+                                        <VBox spacing="5.0">
+                                            <Label styleClass="input-label" text="Current Password" />
+                                            <PasswordField fx:id="txtCurrentPass" promptText="Enter current password" styleClass="settings-input" />
+                                        </VBox>
+
+                                        <HBox spacing="20.0">
+                                            <children>
+                                                <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                                    <Label styleClass="input-label" text="New Password" />
+                                                    <PasswordField fx:id="txtNewPass" promptText="Enter new password" styleClass="settings-input" />
+                                                </VBox>
+                                                <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                                    <Label styleClass="input-label" text="Confirm Password" />
+                                                    <PasswordField fx:id="txtConfirmPass" promptText="ReEnter new password" styleClass="settings-input" />
+                                                </VBox>
+                                            </children>
+                                        </HBox>
+
+                                        <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                                            <children>
+                                                <Button mnemonicParsing="false" onAction="#handleClear" styleClass="btn-secondary" text="Clear" />
+                                                <Button mnemonicParsing="false" onAction="#handleChangePassword" styleClass="btn-primary" text="Change Password" />
+                                            </children>
+                                            <VBox.margin>
+                                                <Insets top="10.0" />
+                                            </VBox.margin>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+                            </children>
+                            <padding>
+                                <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                            </padding>
+                        </VBox>
+
+                        <HBox spacing="30.0">
+                            <children>
+                                <VBox alignment="CENTER" prefWidth="400.0" spacing="10.0" styleClass="settings-card" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../../../images/Logo.png" />
+                                            </image>
+                                        </ImageView>
+
+                                        <Label styleClass="settings-text-bold" text="Vision Photography System" textFill="#2c3e50">
+                                            <font>
+                                                <Font name="System Bold" size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <Label styleClass="settings-text" text="Version 1.0.1" textFill="#7f8c8d" />
+
+                                        <Separator prefWidth="200.0">
+                                            <VBox.margin>
+                                                <Insets bottom="10.0" top="10.0" />
+                                            </VBox.margin>
+                                        </Separator>
+
+                                        <Label styleClass="settings-text-bold" text="Developed by Himasha Kashmira" textFill="#2c3e50">
+                                            <font>
+                                                <Font name="System Bold" size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <Label styleClass="settings-text" text="© 2025 All Rights Reserved." textFill="#95a5a6" />
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                                    </padding>
+                                </VBox>
+
+                                <VBox prefWidth="400.0" styleClass="settings-card" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <Label styleClass="card-header" text="Contact Support" />
+                                        <Separator prefWidth="200.0">
+                                            <VBox.margin>
+                                                <Insets bottom="20.0" top="10.0" />
+                                            </VBox.margin>
+                                        </Separator>
+
+                                        <VBox spacing="15.0">
+                                            <children>
+                                                <Label styleClass="contact-label" text="Email: support@ijse.lk" />
+                                                <Label styleClass="contact-label" text="Hotline: +94 78 360 4911" />
+                                                <Label styleClass="contact-label" text="Address: No 07, Main Street, Galle." />
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                                    </padding>
+                                </VBox>
+                            </children>
+                        </HBox>
+
+                    </children>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
+</AnchorPane>
