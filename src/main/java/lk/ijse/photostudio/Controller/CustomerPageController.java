@@ -6,11 +6,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import lk.ijse.photostudio.BO.BOFactory;
-import lk.ijse.photostudio.BO.Custom.CustomerBO;
+import lk.ijse.photostudio.BO.Customer.CustomerBO;
 import lk.ijse.photostudio.DTO.CustomerDTO;
 
 import java.net.URL;

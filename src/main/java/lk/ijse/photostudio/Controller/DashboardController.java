@@ -3,14 +3,8 @@ package lk.ijse.photostudio.Controller;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import java.io.IOException;
-import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Optional;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,87 +14,63 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import lk.ijse.photostudio.App;
+import lk.ijse.photostudio.BO.BOFactory;
+import lk.ijse.photostudio.BO.Dashboard.DashboardBO;
 import lk.ijse.photostudio.DTO.BookingDTO;
-import lk.ijse.photostudio.Model.DashboardModel;
+
+import java.io.IOException;
+import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
 
     @FXML
     private ScrollPane mainContent;
-
     @FXML
     private VBox overViewPane;
+    @FXML
+    private Label lblTotalBookings, lblPendingOrders, lblTotalIncome, lblTime, lblDate;
 
-    // label card
-    @FXML private Label lblTotalBookings;
-    @FXML private Label lblPendingOrders;
-    @FXML private Label lblTotalIncome;
+    @FXML
+    private Button clickDashboard, clickCustomer, clickPackages, clickBookings, clickOrder, clickMaterial, clickSupplier, clickReport, clickSetting;
 
-    @FXML private Label lblTime;
-    @FXML private Label lblDate;
+    @FXML
+    private TableView<BookingDTO> tblTodayBookings;
+    @FXML
+    private TableColumn<BookingDTO, String> colId, colCustomer, colType, colTime;
 
-    // Button Highlight Change
-    @FXML private javafx.scene.control.Button clickDashboard;
-    @FXML private javafx.scene.control.Button clickCustomer;
-    @FXML private javafx.scene.control.Button clickPackages;
-    @FXML private javafx.scene.control.Button clickBookings;
-    @FXML private javafx.scene.control.Button clickOrder;
-    @FXML private javafx.scene.control.Button clickMaterial;
-    @FXML private javafx.scene.control.Button clickSupplier;
-    @FXML private javafx.scene.control.Button clickReport;
-    @FXML private javafx.scene.control.Button clickSetting;
-
-    // Pending Table
-    @FXML private TableView<BookingDTO> tblTodayBookings;
-    @FXML private TableColumn<BookingDTO, String> colId;
-    @FXML private TableColumn<BookingDTO, String> colCustomer;
-    @FXML private TableColumn<BookingDTO, String> colType; // Package
-    @FXML private TableColumn<BookingDTO, String> colTime;
+    DashboardBO dashboardBO = (DashboardBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.DASHBOARD);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("Dashboard is loaded!");
-        initializeButtons();
-        loadDashboardCounts();
-
         colId.setCellValueFactory(new PropertyValueFactory<>("bookingId"));
         colCustomer.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         colType.setCellValueFactory(new PropertyValueFactory<>("packageId"));
         colTime.setCellValueFactory(new PropertyValueFactory<>("timeSlot"));
 
-        // Load Data Immediately
+        setActive(clickDashboard);
         refreshDashboard();
-
         initClock();
     }
 
     public void refreshDashboard() {
-        loadDashboardCounts();
-        loadTodaysBookings();
-    }
+        try {
+            // Load Counts
+            lblTotalBookings.setText(String.valueOf(dashboardBO.getTotalBookings()));
+            lblPendingOrders.setText(String.valueOf(dashboardBO.getPendingBookings()));
+            lblTotalIncome.setText(String.format("Rs. %.2f", dashboardBO.getTotalIncome()));
 
-    // Clear Active Button
-    @FXML
-    private void clearActive() {
-        clickDashboard.getStyleClass().remove("nav-button-active");
-        clickCustomer.getStyleClass().remove("nav-button-active");
-        clickPackages.getStyleClass().remove("nav-button-active");
-        clickBookings.getStyleClass().remove("nav-button-active");
-        clickOrder.getStyleClass().remove("nav-button-active");
-        clickMaterial.getStyleClass().remove("nav-button-active");
-        clickSupplier.getStyleClass().remove("nav-button-active");
-        clickReport.getStyleClass().remove("nav-button-active");
-        clickSetting.getStyleClass().remove("nav-button-active");
-    }
+            // Load Table
+            ArrayList<BookingDTO> list = dashboardBO.getTodaysBookings();
+            tblTodayBookings.setItems(FXCollections.observableArrayList(list));
 
-    @FXML
-    private void setActive(javafx.scene.control.Button button) {
-        clearActive();
-        button.getStyleClass().add("nav-button-active");
-    }
-
-    public void initializeButtons() {
-        setActive(clickDashboard);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -112,145 +82,78 @@ public class DashboardController implements Initializable {
 
     @FXML
     private void onClickCustomer() throws IOException {
-        Parent customerPageFXML = App.loadFXML("CustomerPage");
-        mainContent.setContent(customerPageFXML);
+        mainContent.setContent(App.loadFXML("CustomerPage"));
         setActive(clickCustomer);
     }
 
     @FXML
     private void onClickPackages() throws IOException {
-        FXMLLoader loader = new FXMLLoader(
-                App.class.getResource("PackagePage.fxml")
-        );
-        Parent packagePageFXML = loader.load();
-        PackagePageController controller = loader.getController();
-        controller.setDashboardController(this);
-
-        mainContent.setContent(packagePageFXML);
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("PackagePage.fxml"));
+        mainContent.setContent(loader.load());
+        ((PackagePageController) loader.getController()).setDashboardController(this);
         setActive(clickPackages);
-    }
-
-    public void loadPackageOptions() throws IOException {
-        Parent optionPage = App.loadFXML("packageAdditional");
-        mainContent.setContent(optionPage);
     }
 
     @FXML
     private void onClickBookings() throws IOException {
-        Parent bookingPageFXML = App.loadFXML("BookingPage");
-        mainContent.setContent(bookingPageFXML);
+        mainContent.setContent(App.loadFXML("BookingPage"));
         setActive(clickBookings);
     }
 
     @FXML
     private void onClickOrder() throws IOException {
-        Parent orderPageFXML = App.loadFXML("OrderPage");
-        mainContent.setContent(orderPageFXML);
+        mainContent.setContent(App.loadFXML("OrderPage"));
         setActive(clickOrder);
     }
 
     @FXML
     private void onClickMaterial() throws IOException {
-        Parent materialPageFXML = App.loadFXML("MaterialPage");
-        mainContent.setContent(materialPageFXML);
+        mainContent.setContent(App.loadFXML("MaterialPage"));
         setActive(clickMaterial);
     }
 
     @FXML
     private void onClickSupplier() throws IOException {
-        Parent supplierPageFXML = App.loadFXML("SupplierPage");
-        mainContent.setContent(supplierPageFXML);
+        mainContent.setContent(App.loadFXML("SupplierPage"));
         setActive(clickSupplier);
     }
 
     @FXML
     private void onClickReport() throws IOException {
-        Parent reportPageFXML = App.loadFXML("ReportPage");
-        mainContent.setContent(reportPageFXML);
+        mainContent.setContent(App.loadFXML("ReportPage"));
         setActive(clickReport);
     }
 
     @FXML
     private void onClickSetting() throws IOException {
-        Parent reportPageFXML = App.loadFXML("Setting");
-        mainContent.setContent(reportPageFXML);
+        mainContent.setContent(App.loadFXML("Setting"));
         setActive(clickSetting);
     }
 
-    // Logout Button Set
+    public void loadPackageOptions() throws IOException {
+        Parent optionPage = App.loadFXML("PackageAdditional");
+        mainContent.setContent(optionPage);
+    }
+
     @FXML
     private void handleLogout(ActionEvent event) throws IOException {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Logout");
-        alert.setHeaderText("You are about to logout!");
-        alert.setContentText("Are you sure you want to exit?");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
+        if (new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit?", ButtonType.OK, ButtonType.CANCEL).showAndWait().get() == ButtonType.OK) {
             App.setRoot("Login");
         }
     }
 
-    // label load
-    private void loadDashboardCounts() {
-        try {
-            int total = DashboardModel.getTotalBookingsCount();
-            int pending = DashboardModel.getPendingBookingsCount();
-            double income = DashboardModel.getTotalIncome();
-
-            lblTotalBookings.setText(String.valueOf(total));
-            lblPendingOrders.setText(String.valueOf(pending));
-            lblTotalIncome.setText(String.format("Rs. %.2f", income));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void setActive(Button button) {
+        Button[] buttons = {clickDashboard, clickCustomer, clickPackages, clickBookings, clickOrder, clickMaterial, clickSupplier, clickReport, clickSetting};
+        for (Button b : buttons) b.getStyleClass().remove("nav-button-active");
+        button.getStyleClass().add("nav-button-active");
     }
-
-    private void loadTodaysBookings() {
-
-        colId.setCellValueFactory(new PropertyValueFactory<>("bookingId"));
-        colCustomer.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        colType.setCellValueFactory(new PropertyValueFactory<>("packageId"));
-        colTime.setCellValueFactory(new PropertyValueFactory<>("timeSlot"));
-
-        try {
-
-            ObservableList<BookingDTO> list = DashboardModel.getTodaysPendingBookings();
-
-            System.out.println("Today's Booking Count: " + list.size());
-
-            // Set Items
-            tblTodayBookings.setItems(list);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 
     private void initClock() {
-
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-
-            // Get Current Time
-            LocalDateTime now = LocalDateTime.now();
-
-            // Format Time
-            String formattedTime = now.format(DateTimeFormatter.ofPattern("hh:mm:ss a"));
-
-            // Format Date
-            String formattedDate = now.format(DateTimeFormatter.ofPattern("MMM dd, yyyy"));
-
-            // Update Labels
-            if (lblTime != null) lblTime.setText(formattedTime);
-            if (lblDate != null) lblDate.setText(formattedDate);
-
-        }), new KeyFrame(Duration.seconds(1))); // Update every 1 second
-
+            lblTime.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("hh:mm:ss a")));
+            lblDate.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("MMM dd, yyyy")));
+        }), new KeyFrame(Duration.seconds(1)));
         clock.setCycleCount(Animation.INDEFINITE);
-
-        // Start clock
         clock.play();
     }
-
 }

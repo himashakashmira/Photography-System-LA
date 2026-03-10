@@ -1,6 +1,6 @@
-package lk.ijse.photostudio.BO.Custom.impl;
+package lk.ijse.photostudio.BO.Customer.impl;
 
-import lk.ijse.photostudio.BO.Custom.CustomerBO;
+import lk.ijse.photostudio.BO.Customer.CustomerBO;
 import lk.ijse.photostudio.DAO.Customer.CustomerDAO;
 import lk.ijse.photostudio.DAO.DAOFactory;
 import lk.ijse.photostudio.DTO.CustomerDTO;

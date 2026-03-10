@@ -81,7 +81,7 @@
                </children>
             </VBox>
 
-            <Hyperlink alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" onAction="#handleForgotPassword" styleClass="forgot-link" text="Forgot Password?" />
+            <Hyperlink alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" styleClass="forgot-link" text="Forgot Password?" />
 
             <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#login" prefHeight="45.0" styleClass="glass-btn" text="LOGIN">
                <font>

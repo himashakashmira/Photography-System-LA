@@ -1,69 +1,44 @@
 package lk.ijse.photostudio.Controller;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.control.TextField;
+import lk.ijse.photostudio.BO.BOFactory;
+import lk.ijse.photostudio.BO.Supplier.SupplierBO;
 import lk.ijse.photostudio.DTO.SupplierDTO;
-import lk.ijse.photostudio.Model.SupplierModel;
 
 import java.net.URL;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class SupplierPageController implements Initializable {
 
     @FXML
-    private TextField SupId;
-
-    @FXML
-    private TextField SupName;
-
-    @FXML
-    private TextField SupMaterial;
-
-    @FXML
-    private TextField SupContact;
-
+    private TextField SupId, SupName, SupMaterial, SupContact;
     @FXML
     private TableView<SupplierDTO> tblSupplier;
-
     @FXML
-    private TableColumn<SupplierDTO, String> colSupplierId;
-
-    @FXML
-    private TableColumn<SupplierDTO, String> colSupplierName;
-
-    @FXML
-    private TableColumn<SupplierDTO, String> colSupplierMaterial;
-
-    @FXML
-    private TableColumn<SupplierDTO, String> colSupplierContact;
-
+    private TableColumn<SupplierDTO, String> colSupplierId, colSupplierName, colSupplierMaterial, colSupplierContact;
 
     private final String SUPPLIER_ID_REGEX = "^[A-Za-z0-9 ]+$";
     private final String SUPPLIER_NAME_REGEX = "^[A-Za-z]{3,}$";
     private final String SUPPLIER_MATERIAL_REGEX = "^[A-Za-z0-9 ]+$";
     private final String SUPPLIER_CONTACT_REGEX = "^[0-9]{10}$";
 
+    SupplierBO supplierBO = (SupplierBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.SUPPLIER);
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("Supplier Page is loaded!");
-
         colSupplierId.setCellValueFactory(new PropertyValueFactory<>("supplierId"));
         colSupplierName.setCellValueFactory(new PropertyValueFactory<>("supplierName"));
         colSupplierMaterial.setCellValueFactory(new PropertyValueFactory<>("materialType"));
         colSupplierContact.setCellValueFactory(new PropertyValueFactory<>("supplierContact"));
 
-        tblSupplier.setItems(loadAllSuppliers());
-
+        loadAllSuppliers();
         loadNextSupplierId();
     }
 
@@ -78,171 +53,102 @@ public class SupplierPageController implements Initializable {
         }
     }
 
-
     @FXML
     private void handleSaveSupplier() {
-        String id = SupId.getText().trim();
-        String name = SupName.getText().trim();
-        String material = SupMaterial.getText().trim();
-        String contact = SupContact.getText().trim();
-
-        if (!id.matches(SUPPLIER_ID_REGEX)) {
-            new Alert(Alert.AlertType.ERROR, "Please enter an ID!").show();
-        } else if (!name.matches(SUPPLIER_NAME_REGEX)) {
-            new Alert(Alert.AlertType.ERROR, "Please enter a valid name (at least 3 characters)! ").show();
-        } else if (!material.matches(SUPPLIER_MATERIAL_REGEX)) {
-            new Alert(Alert.AlertType.ERROR, "Please enter a valid material! ").show();
-        } else if (!contact.matches(SUPPLIER_CONTACT_REGEX)) {
-            new Alert(Alert.AlertType.ERROR, "Please enter a valid contact! ").show();
-        } else {
-
+        if (validateInput()) {
             try {
-                SupplierModel supplierModel = new SupplierModel();
-                boolean result = supplierModel.saveSupplier(new SupplierDTO(id, name, material, contact));
-
+                boolean result = supplierBO.saveSupplier(new SupplierDTO(SupId.getText(), SupName.getText(), SupMaterial.getText(), SupContact.getText()));
                 if (result) {
-                    new Alert(Alert.AlertType.INFORMATION, "Supplier Saved Successfully!").show();
-                    clearFields();
-                    loadAllSuppliers();
-                    loadNextSupplierId();
-                } else {
-                    new Alert(Alert.AlertType.WARNING, "Failed to Save Supplier!").show();
+                    new Alert(Alert.AlertType.INFORMATION, "Supplier Saved!").show();
+                    refreshUI();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Something Went Wrong!" + e.getMessage()).show();
             }
-
         }
     }
 
     @FXML
     private void handleUpdateSupplier() {
-        String id = SupId.getText().trim();
-        String name = SupName.getText().trim();
-        String material = SupMaterial.getText().trim();
-        String contact = SupContact.getText().trim();
-
-        if (!id.matches(SUPPLIER_ID_REGEX)) {
-            new Alert(Alert.AlertType.ERROR, "Please enter an ID!").show();
-        } else if (!name.matches(SUPPLIER_NAME_REGEX)) {
-            new Alert(Alert.AlertType.ERROR, "Please enter a valid name (at least 3 characters)! ").show();
-        } else if (!material.matches(SUPPLIER_MATERIAL_REGEX)) {
-            new Alert(Alert.AlertType.ERROR, "Please enter a valid material! ").show();
-        } else if (!contact.matches(SUPPLIER_CONTACT_REGEX)) {
-            new Alert(Alert.AlertType.ERROR, "Please enter a valid contact! ").show();
-        } else {
-
+        if (validateInput()) {
             try {
-                SupplierModel supplierModel = new SupplierModel();
-                boolean result = supplierModel.updateSupplier(new SupplierDTO(id, name, material, contact));
-
+                boolean result = supplierBO.updateSupplier(new SupplierDTO(SupId.getText(), SupName.getText(), SupMaterial.getText(), SupContact.getText()));
                 if (result) {
-                    new Alert(Alert.AlertType.INFORMATION, "Supplier Updated Successfully!").show();
-                    clearFields();
-                    loadAllSuppliers();
-                    loadNextSupplierId();
-                } else {
-                    new Alert(Alert.AlertType.WARNING, "Failed to Update Supplier!").show();
+                    new Alert(Alert.AlertType.INFORMATION, "Supplier Updated!").show();
+                    refreshUI();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Something Went Wrong!" + e.getMessage()).show();
             }
         }
     }
 
     @FXML
     private void handleDeleteSupplier() {
-        String id = SupId.getText().trim();
-
-        if (!id.matches(SUPPLIER_ID_REGEX)) {
-            new Alert(Alert.AlertType.ERROR, "Please enter an ID!").show();
-        } else {
-            try {
-                SupplierModel supplierModel = new SupplierModel();
-                boolean result = supplierModel.deleteSupplier(id);
-
-                if (result) {
-                    new Alert(Alert.AlertType.INFORMATION, "Supplier Deleted Successfully!").show();
-                    clearFields();
-                    loadAllSuppliers();
-                    loadNextSupplierId();
-                } else {
-                    new Alert(Alert.AlertType.WARNING, "Failed to Delete Supplier!").show();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Something Went Wrong!" + e.getMessage()).show();
+        try {
+            if (supplierBO.deleteSupplier(SupId.getText())) {
+                new Alert(Alert.AlertType.INFORMATION, "Supplier Deleted!").show();
+                refreshUI();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     @FXML
     private void handleSearchSupplier(KeyEvent event) {
-        try {
-            if (event.getCode() == KeyCode.ENTER) {
-
-                String id = SupId.getText().trim();
-
-                if (!id.matches(SUPPLIER_ID_REGEX)) {
-                    new Alert(Alert.AlertType.ERROR, "Please enter an ID!").show();
+        if (event.getCode() == KeyCode.ENTER) {
+            try {
+                SupplierDTO dto = supplierBO.searchSupplier(SupId.getText());
+                if (dto != null) {
+                    SupId.setText(dto.getSupplierId());
+                    SupName.setText(dto.getSupplierName());
+                    SupMaterial.setText(dto.getMaterialType());
+                    SupContact.setText(dto.getSupplierContact());
                 } else {
-                    SupplierModel supplierModel = new SupplierModel();
-                    SupplierDTO supplierDTO = supplierModel.searchSupplier(id);
-
-                    if (supplierDTO != null) {
-                        SupId.setText(supplierDTO.getSupplierId());
-                        SupName.setText(supplierDTO.getSupplierName());
-                        SupMaterial.setText(supplierDTO.getMaterialType());
-                        SupContact.setText(supplierDTO.getSupplierContact());
-                    } else {
-                        new Alert(Alert.AlertType.WARNING, "Supplier Not Found!").show();
-                    }
+                    new Alert(Alert.AlertType.WARNING, "Not Found").show();
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Something Went Wrong!" + e.getMessage()).show();
         }
     }
 
-    @FXML
-    private void handleResetSupplier() {
-        clearFields();
-        loadNextSupplierId();
-    }
-
-    @FXML
-    private void clearFields() {
-        SupId.clear();
-        SupName.clear();
-        SupMaterial.clear();
-        SupContact.clear();
-    }
-
-    private ObservableList<SupplierDTO> loadAllSuppliers() {
+    private void loadAllSuppliers() {
         try {
-            SupplierModel supplierModel = new SupplierModel();
-            ObservableList<SupplierDTO> obList = supplierModel.getSuppliers();
-            tblSupplier.setItems(obList);
-            return obList;
+            ArrayList<SupplierDTO> list = supplierBO.getAllSuppliers();
+            tblSupplier.setItems(FXCollections.observableArrayList(list));
         } catch (Exception e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
-            return FXCollections.observableArrayList();
         }
-
     }
 
     private void loadNextSupplierId() {
         try {
-            SupplierModel supplierModel = new SupplierModel();
-            SupId.setText(supplierModel.getNextSupplierId());
-        } catch (SQLException e) {
+            SupId.setText(supplierBO.generateNextSupplierId());
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-}
+    private void refreshUI() {
+        SupId.clear();
+        SupName.clear();
+        SupMaterial.clear();
+        SupContact.clear();
+        loadAllSuppliers();
+        loadNextSupplierId();
+    }
 
+    private boolean validateInput() {
+        if (!SupId.getText().matches(SUPPLIER_ID_REGEX)) return false;
+        if (!SupName.getText().matches(SUPPLIER_NAME_REGEX)) return false;
+        if (!SupContact.getText().matches(SUPPLIER_CONTACT_REGEX)) return false;
+        return true;
+    }
+
+    @FXML
+    private void handleResetSupplier() {
+        refreshUI();
+    }
+}

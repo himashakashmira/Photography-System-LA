@@ -1,4 +1,4 @@
-package lk.ijse.photostudio.BO.Custom;
+package lk.ijse.photostudio.BO.Customer;
 
 import lk.ijse.photostudio.BO.SuperBO;
 import lk.ijse.photostudio.DTO.CustomerDTO;
