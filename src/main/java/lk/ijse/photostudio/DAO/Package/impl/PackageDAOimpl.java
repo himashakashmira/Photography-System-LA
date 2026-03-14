@@ -14,7 +14,13 @@ public class PackageDAOimpl implements PackageDAO {
         ResultSet rst = CrudUtil.executeQuery("SELECT * FROM package ORDER BY package_id DESC");
         ArrayList<Package> allPackages = new ArrayList<>();
         while (rst.next()) {
-            allPackages.add(new Package(rst.getString(1), rst.getString(2), rst.getString(5), rst.getString(4), rst.getDouble(3)));
+            allPackages.add(new Package(
+                    rst.getString("package_id"),
+                    rst.getString("package_name"),
+                    rst.getString("category"),
+                    rst.getString("description"),
+                    rst.getDouble("base_price")
+            ));
         }
         return allPackages;
     }

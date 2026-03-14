@@ -17,8 +17,7 @@ public class CustomerDAOImpl implements CustomerDAO {
                     rst.getString(2),
                     rst.getString(3),
                     rst.getString(4),
-                    rst.getString(5),
-                    rst.getString(6))
+                    rst.getString(5))
             );
         }
         return allCustomers;

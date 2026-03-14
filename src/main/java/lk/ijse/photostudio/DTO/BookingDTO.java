@@ -7,21 +7,21 @@ public class BookingDTO {
     private String customerId;
     private String packageId;
     private String additionalOption;
-    private String status;
     private LocalDate eventDate;
-    private String timeSlot; // New Field
+    private String timeSlot;
+    private String status;
 
     public BookingDTO() {
     }
 
-    public BookingDTO(String bookingId, String customerId, String packageId, String additionalOption, String status, LocalDate eventDate, String timeSlot) {
+    public BookingDTO(String bookingId, String customerId, String packageId, String additionalOption, LocalDate eventDate, String timeSlot, String status) {
         this.bookingId = bookingId;
         this.customerId = customerId;
         this.packageId = packageId;
         this.additionalOption = additionalOption;
-        this.status = status;
         this.eventDate = eventDate;
         this.timeSlot = timeSlot;
+        this.status = status;
     }
 
     public String getBookingId() {
@@ -55,14 +55,6 @@ public class BookingDTO {
         this.additionalOption = additionalOption;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public LocalDate getEventDate() {
         return eventDate;
     }
@@ -77,6 +69,14 @@ public class BookingDTO {
 
     public void setTimeSlot(String timeSlot) {
         this.timeSlot = timeSlot;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

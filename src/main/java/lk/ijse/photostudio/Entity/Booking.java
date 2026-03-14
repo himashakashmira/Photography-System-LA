@@ -11,9 +11,6 @@ public class Booking {
     private LocalDate eventDate;
     private String timeSlot;
 
-    public Booking() {
-    }
-
     public Booking(String bookingId, String customerId, String packageId, String additionalOption, String status, LocalDate eventDate, String timeSlot) {
         this.bookingId = bookingId;
         this.customerId = customerId;
@@ -24,24 +21,32 @@ public class Booking {
         this.timeSlot = timeSlot;
     }
 
-    public String getBookingId() { return bookingId; }
-    public void setBookingId(String bookingId) { this.bookingId = bookingId; }
 
-    public String getCustomerId() { return customerId; }
-    public void setCustomerId(String customerId) { this.customerId = customerId; }
+    public String getBookingId() {
+        return bookingId;
+    }
 
-    public String getPackageId() { return packageId; }
-    public void setPackageId(String packageId) { this.packageId = packageId; }
+    public String getCustomerId() {
+        return customerId;
+    }
 
-    public String getAdditionalOption() { return additionalOption; }
-    public void setAdditionalOption(String additionalOption) { this.additionalOption = additionalOption; }
+    public String getPackageId() {
+        return packageId;
+    }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public String getAdditionalOption() {
+        return additionalOption;
+    }
 
-    public LocalDate getEventDate() { return eventDate; }
-    public void setEventDate(LocalDate eventDate) { this.eventDate = eventDate; }
+    public String getStatus() {
+        return status;
+    }
 
-    public String getTimeSlot() { return timeSlot; }
-    public void setTimeSlot(String timeSlot) { this.timeSlot = timeSlot; }
+    public LocalDate getEventDate() {
+        return eventDate;
+    }
+
+    public String getTimeSlot() {
+        return timeSlot;
+    }
 }

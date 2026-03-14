@@ -21,19 +21,37 @@ public class BookingBOimpl implements BookingBO {
         ArrayList<Booking> entities = bookingDAO.getAll();
         ArrayList<BookingDTO> dtos = new ArrayList<>();
         for (Booking b : entities) {
-            dtos.add(new BookingDTO(b.getBookingId(), b.getCustomerId(), b.getPackageId(), b.getAdditionalOption(), b.getStatus(), b.getEventDate(), b.getTimeSlot()));
+            dtos.add(new BookingDTO(b.getBookingId(),
+                    b.getCustomerId(),
+                    b.getPackageId(),
+                    b.getAdditionalOption(),
+                    b.getEventDate(),
+                    b.getTimeSlot(),
+                    b.getStatus()));
         }
         return dtos;
     }
 
     @Override
     public boolean saveBooking(BookingDTO dto) throws SQLException, ClassNotFoundException {
-        return bookingDAO.save(new Booking(dto.getBookingId(), dto.getCustomerId(), dto.getPackageId(), dto.getAdditionalOption(), dto.getStatus(), dto.getEventDate(), dto.getTimeSlot()));
+        return bookingDAO.save(new Booking(dto.getBookingId(),
+                dto.getCustomerId(),
+                dto.getPackageId(),
+                dto.getAdditionalOption(),
+                dto.getStatus(),
+                dto.getEventDate(),
+                dto.getTimeSlot()));
     }
 
     @Override
     public boolean updateBooking(BookingDTO dto) throws SQLException, ClassNotFoundException {
-        return bookingDAO.update(new Booking(dto.getBookingId(), dto.getCustomerId(), dto.getPackageId(), dto.getAdditionalOption(), dto.getStatus(), dto.getEventDate(), dto.getTimeSlot()));
+        return bookingDAO.update(new Booking(dto.getBookingId(),
+                dto.getCustomerId(),
+                dto.getPackageId(),
+                dto.getAdditionalOption(),
+                dto.getStatus(),
+                dto.getEventDate(),
+                dto.getTimeSlot()));
     }
 
     @Override
@@ -50,7 +68,7 @@ public class BookingBOimpl implements BookingBO {
     public BookingDTO searchBooking(String id) throws SQLException, ClassNotFoundException {
         Booking b = bookingDAO.search(id);
         if (b != null) {
-            return new BookingDTO(b.getBookingId(), b.getCustomerId(), b.getPackageId(), b.getAdditionalOption(), b.getStatus(), b.getEventDate(), b.getTimeSlot());
+            return new BookingDTO(b.getBookingId(), b.getCustomerId(), b.getPackageId(), b.getAdditionalOption(), b.getEventDate(), b.getTimeSlot(), b.getStatus());
         }
         return null;
     }
@@ -65,9 +83,11 @@ public class BookingBOimpl implements BookingBO {
 
     @Override
     public ObservableList<String> getAllPackageIds() throws SQLException, ClassNotFoundException {
-        ResultSet rst = CrudUtil.executeQuery("SELECT package_id, name FROM package");
+        ResultSet rst = CrudUtil.executeQuery("SELECT package_id, package_name FROM package");
         ObservableList<String> ids = FXCollections.observableArrayList();
-        while (rst.next()) { ids.add(rst.getString(1) + " - " + rst.getString(2)); }
+        while (rst.next()) {
+            ids.add(rst.getString(1) + " - " + rst.getString(2));
+        }
         return ids;
     }
 

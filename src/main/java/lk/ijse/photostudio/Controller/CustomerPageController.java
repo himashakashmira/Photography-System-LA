@@ -65,12 +65,13 @@ public class CustomerPageController implements Initializable {
     @FXML
     private void handleTableClick(MouseEvent event) {
         CustomerDTO selectedCustomer = tblCustomers.getSelectionModel().getSelectedItem();
+
         if (selectedCustomer != null) {
             txtId.setText(selectedCustomer.getId());
             txtName.setText(selectedCustomer.getName());
             txtPhone.setText(selectedCustomer.getPhone());
-            txtEmail.setText(selectedCustomer.getEmail());
             txtAddress.setText(selectedCustomer.getAddress());
+            txtEmail.setText(selectedCustomer.getEmail());
         }
     }
 
@@ -169,10 +170,14 @@ public class CustomerPageController implements Initializable {
     private void loadCustomersTable() {
         try {
             ArrayList<CustomerDTO> allCustomers = customerBO.getAllCustomers();
+
+            System.out.println("Customers loaded: " + allCustomers.size());
+
             ObservableList<CustomerDTO> obList = FXCollections.observableArrayList(allCustomers);
             tblCustomers.setItems(obList);
+
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Failed to load table!").show();
+            e.printStackTrace();
         }
     }
 
@@ -187,19 +192,24 @@ public class CustomerPageController implements Initializable {
 
     private boolean validateFields(String id, String name, String phone, String email, String address) {
         if (!id.matches(CUSTOMER_ID_REGEX)) {
-            new Alert(Alert.AlertType.ERROR, "Invalid ID!").show(); return false;
+            new Alert(Alert.AlertType.ERROR, "Invalid ID!").show();
+            return false;
         }
         if (!name.matches(CUSTOMER_NAME_REGEX)) {
-            new Alert(Alert.AlertType.ERROR, "Invalid Name!").show(); return false;
+            new Alert(Alert.AlertType.ERROR, "Invalid Name!").show();
+            return false;
         }
         if (!phone.matches(CUSTOMER_PHONE_REGEX)) {
-            new Alert(Alert.AlertType.ERROR, "Invalid Phone!").show(); return false;
+            new Alert(Alert.AlertType.ERROR, "Invalid Phone!").show();
+            return false;
         }
         if (!email.matches(CUSTOMER_EMAIL_REGEX)) {
-            new Alert(Alert.AlertType.ERROR, "Invalid Email!").show(); return false;
+            new Alert(Alert.AlertType.ERROR, "Invalid Email!").show();
+            return false;
         }
         if (!address.matches(CUSTOMER_ADDRESS_REGEX)) {
-            new Alert(Alert.AlertType.ERROR, "Invalid Address!").show(); return false;
+            new Alert(Alert.AlertType.ERROR, "Invalid Address!").show();
+            return false;
         }
         return true;
     }

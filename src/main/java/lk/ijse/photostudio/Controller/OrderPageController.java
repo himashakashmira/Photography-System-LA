@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import lk.ijse.photostudio.BO.BOFactory;
 import lk.ijse.photostudio.BO.Booking.BookingBO;
 import lk.ijse.photostudio.BO.Order.OrderBO;
@@ -47,6 +48,20 @@ public class OrderPageController implements Initializable {
         cmbBookingId.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) calculateTotals(newVal);
         });
+    }
+
+    @FXML
+    private void handleTableClick(MouseEvent event) {
+        OrderDTO selectedItem = tblOrders.getSelectionModel().getSelectedItem();
+
+        if (selectedItem != null) {
+            txtOrderId.setText(selectedItem.getOrderId());
+            cmbBookingId.setValue(selectedItem.getBookingId());
+
+            txtPkgPrice.setText(String.format("%.2f", selectedItem.getPkgPrice()));
+            txtOptPrice.setText(String.format("%.2f", selectedItem.getOptPrice()));
+            txtTotal.setText(String.format("%.2f", selectedItem.getGrandTotal()));
+        }
     }
 
     private void calculateTotals(String bookingId) {

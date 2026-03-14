@@ -7,6 +7,8 @@ import lk.ijse.photostudio.DBConnection.DBConnection;
 import lk.ijse.photostudio.DTO.BookingDTO;
 import lk.ijse.photostudio.DTO.OrderDTO;
 import lk.ijse.photostudio.DTO.ReportDTO;
+import lk.ijse.photostudio.Entity.Booking;
+import lk.ijse.photostudio.Entity.Order;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -22,12 +24,42 @@ public class ReportBOimpl implements ReportBO {
 
     @Override
     public ArrayList<OrderDTO> getOrderReport(LocalDate from, LocalDate to) throws SQLException, ClassNotFoundException {
-        return null;
+
+        ArrayList<Order> entities = queryDAO.getOrderReport(from, to);
+        ArrayList<OrderDTO> dtos = new ArrayList<>();
+
+        for (Order o : entities) {
+            dtos.add(new OrderDTO(o.getOrderId(), o.getBookingId(), o.getCustomerId(), o.getPkgPrice(), o.getOptPrice(), o.getGrandTotal()));
+        }
+        return dtos;
     }
 
-    // JasperReports generate Helper Methods
+    @Override
+    public ArrayList<BookingDTO> getBookingsByFilter(LocalDate from, LocalDate to, String customer) throws SQLException, ClassNotFoundException {
+        ArrayList<Booking> entities = queryDAO.getBookingsByFilter(from, to, customer);
+        ArrayList<BookingDTO> dtos = new ArrayList<>();
+
+        for (Booking b : entities) {
+            dtos.add(new BookingDTO(b.getBookingId(), b.getCustomerId(), b.getPackageId(), b.getAdditionalOption(), b.getEventDate(), b.getTimeSlot(), b.getStatus()));
+        }
+        return dtos;
+    }
+
+    @Override
+    public ArrayList<ReportDTO> getPackageReport(String category) throws SQLException, ClassNotFoundException {
+        return queryDAO.getPackageReport(category);
+    }
+
+    @Override
+    public ArrayList<ReportDTO> getStockReport(String supplier) throws SQLException, ClassNotFoundException {
+        return queryDAO.getStockReport(supplier);
+    }
+
+    // JasperReports Methods
     private void generateReport(String path) throws Exception {
         InputStream reportStream = getClass().getResourceAsStream(path);
+        if (reportStream == null) throw new RuntimeException("Report file not found!");
+
         Connection conn = DBConnection.getInstance().getConnection();
         JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, new HashMap<>(), conn);
@@ -47,20 +79,5 @@ public class ReportBOimpl implements ReportBO {
     @Override
     public void printOrderProfitReport() throws Exception {
         generateReport("/lk/ijse/photostudio/reports/OrderProfitReport.jrxml");
-    }
-
-    @Override
-    public ArrayList<BookingDTO> getBookingsByFilter(LocalDate from, LocalDate to, String customer) throws SQLException, ClassNotFoundException {
-        return null;
-    }
-
-    @Override
-    public ArrayList<ReportDTO> getPackageReport(String category) throws SQLException, ClassNotFoundException {
-        return null;
-    }
-
-    @Override
-    public ArrayList<ReportDTO> getStockReport(String supplier) throws SQLException, ClassNotFoundException {
-        return null;
     }
 }

@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import lk.ijse.photostudio.BO.BOFactory;
 import lk.ijse.photostudio.BO.Booking.BookingBO;
 import lk.ijse.photostudio.DTO.BookingDTO;
@@ -19,21 +20,35 @@ import java.util.ResourceBundle;
 
 public class BookingPageController implements Initializable {
 
-    @FXML private TextField txtBookingId;
-    @FXML private ComboBox<String> cmbCustomer;
-    @FXML private ComboBox<String> cmbPackage;
-    @FXML private ComboBox<String> cmbAdditionalOption;
-    @FXML private ComboBox<String> cmbTimeSlot;
-    @FXML private DatePicker EventDate;
+    @FXML
+    private TextField txtBookingId;
+    @FXML
+    private ComboBox<String> cmbCustomer;
+    @FXML
+    private ComboBox<String> cmbPackage;
+    @FXML
+    private ComboBox<String> cmbAdditionalOption;
+    @FXML
+    private ComboBox<String> cmbTimeSlot;
+    @FXML
+    private DatePicker EventDate;
 
-    @FXML private TableView<BookingDTO> tblBookings;
-    @FXML private TableColumn<BookingDTO,String> colId;
-    @FXML private TableColumn<BookingDTO,String> colCustomer;
-    @FXML private TableColumn<BookingDTO,String> colPackage;
-    @FXML private TableColumn<BookingDTO,String> colOption;
-    @FXML private TableColumn<BookingDTO,LocalDate> colDate;
-    @FXML private TableColumn<BookingDTO,String> colTimeSlot;
-    @FXML private TableColumn<BookingDTO,String> colStatus;
+    @FXML
+    private TableView<BookingDTO> tblBookings;
+    @FXML
+    private TableColumn<BookingDTO, String> colId;
+    @FXML
+    private TableColumn<BookingDTO, String> colCustomer;
+    @FXML
+    private TableColumn<BookingDTO, String> colPackage;
+    @FXML
+    private TableColumn<BookingDTO, String> colOption;
+    @FXML
+    private TableColumn<BookingDTO, LocalDate> colDate;
+    @FXML
+    private TableColumn<BookingDTO, String> colTimeSlot;
+    @FXML
+    private TableColumn<BookingDTO, String> colStatus;
 
     BookingBO bookingBO = (BookingBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.BOOKING);
 
@@ -59,16 +74,37 @@ public class BookingPageController implements Initializable {
         loadNextBookingId();
     }
 
+    @FXML
+    private void handleTableClick(MouseEvent event) {
+        BookingDTO selectedItem = tblBookings.getSelectionModel().getSelectedItem();
+
+        if (selectedItem != null) {
+            txtBookingId.setText(selectedItem.getBookingId());
+            selectComboBoxValue(cmbCustomer, selectedItem.getCustomerId());
+            selectComboBoxValue(cmbPackage, selectedItem.getPackageId());
+            EventDate.setValue(selectedItem.getEventDate());
+            cmbTimeSlot.setValue(selectedItem.getTimeSlot());
+        }
+    }
+
     private void loadTimeSlots() {
         cmbTimeSlot.setItems(FXCollections.observableArrayList("Morning", "Afternoon", "Night"));
     }
 
     private void loadCustomers() {
-        try { cmbCustomer.setItems(bookingBO.getAllCustomerIds()); } catch (Exception e) { e.printStackTrace(); }
+        try {
+            cmbCustomer.setItems(bookingBO.getAllCustomerIds());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadPackages() {
-        try { cmbPackage.setItems(bookingBO.getAllPackageIds()); } catch (Exception e) { e.printStackTrace(); }
+        try {
+            cmbPackage.setItems(bookingBO.getAllPackageIds());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadAdditionalOptions() {
@@ -76,18 +112,29 @@ public class BookingPageController implements Initializable {
             ObservableList<String> options = bookingBO.getAllOptionNames();
             options.add(0, "None");
             cmbAdditionalOption.setItems(options);
-        } catch (Exception e) { e.printStackTrace(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadBookingsTable() {
         try {
             ArrayList<BookingDTO> allBookings = bookingBO.getAllBookings();
+
+            System.out.println("Bookings loaded: " + allBookings.size());
+
             tblBookings.setItems(FXCollections.observableArrayList(allBookings));
-        } catch (Exception e) { e.printStackTrace(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadNextBookingId() {
-        try { txtBookingId.setText(bookingBO.generateNextBookingId()); } catch (Exception e) { e.printStackTrace(); }
+        try {
+            txtBookingId.setText(bookingBO.generateNextBookingId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -97,13 +144,15 @@ public class BookingPageController implements Initializable {
             String packageId = cmbPackage.getValue().split(" - ")[0];
 
             BookingDTO dto = new BookingDTO(txtBookingId.getText(), customerId, packageId,
-                    cmbAdditionalOption.getValue(), "Pending", EventDate.getValue(), cmbTimeSlot.getValue());
+                    cmbAdditionalOption.getValue(), EventDate.getValue(), cmbTimeSlot.getValue(), "Pending");
 
             if (bookingBO.saveBooking(dto)) {
                 new Alert(Alert.AlertType.INFORMATION, "Booking Saved!").show();
                 reset();
             }
-        } catch (Exception e) { e.printStackTrace(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -113,13 +162,15 @@ public class BookingPageController implements Initializable {
             String packageId = cmbPackage.getValue().split(" - ")[0];
 
             BookingDTO dto = new BookingDTO(txtBookingId.getText(), customerId, packageId,
-                    cmbAdditionalOption.getValue(), "Pending", EventDate.getValue(), cmbTimeSlot.getValue());
+                    cmbAdditionalOption.getValue(), EventDate.getValue(), cmbTimeSlot.getValue(), "Pending");
 
             if (bookingBO.updateBooking(dto)) {
                 new Alert(Alert.AlertType.INFORMATION, "Booking Updated!").show();
                 reset();
             }
-        } catch (Exception e) { e.printStackTrace(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -130,7 +181,9 @@ public class BookingPageController implements Initializable {
                 new Alert(Alert.AlertType.INFORMATION, "Deleted!").show();
                 reset();
             }
-        } catch (Exception e) { e.printStackTrace(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -145,14 +198,19 @@ public class BookingPageController implements Initializable {
                     EventDate.setValue(dto.getEventDate());
                     cmbTimeSlot.setValue(dto.getTimeSlot());
                 }
-            } catch (Exception ex) { ex.printStackTrace(); }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
     private void selectComboBoxValue(ComboBox<String> comboBox, String id) {
         if (id == null) return;
         for (String item : comboBox.getItems()) {
-            if (item.startsWith(id + " - ")) { comboBox.setValue(item); return; }
+            if (item.startsWith(id + " - ")) {
+                comboBox.setValue(item);
+                return;
+            }
         }
         comboBox.setValue(id);
     }

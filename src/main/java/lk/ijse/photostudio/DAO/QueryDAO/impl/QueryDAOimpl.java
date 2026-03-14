@@ -72,7 +72,13 @@ public class QueryDAOimpl implements QueryDAO {
         ResultSet rs = CrudUtil.executeQuery(sql);
         ArrayList<Booking> list = new ArrayList<>();
         while (rs.next()) {
-            list.add(new Booking(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getDate(6).toLocalDate(), rs.getString(7)));
+            list.add(new Booking(rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getDate(6).toLocalDate(),
+                    rs.getString(7)));
         }
         return list;
     }

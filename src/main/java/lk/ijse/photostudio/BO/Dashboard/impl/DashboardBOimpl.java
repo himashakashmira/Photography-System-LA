@@ -17,7 +17,7 @@ public class DashboardBOimpl implements DashboardBO {
         ArrayList<Booking> entities = queryDAO.getTodaysPendingBookings();
         ArrayList<BookingDTO> dtos = new ArrayList<>();
         for (Booking b : entities) {
-            dtos.add(new BookingDTO(b.getBookingId(), b.getCustomerId(), b.getPackageId(), b.getAdditionalOption(), b.getStatus(), b.getEventDate(), b.getTimeSlot()));
+            dtos.add(new BookingDTO(b.getBookingId(), b.getCustomerId(), b.getPackageId(), b.getAdditionalOption(), b.getEventDate(), b.getTimeSlot(), b.getStatus()));
         }
         return dtos;
     }
